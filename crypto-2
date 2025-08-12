@@ -1,0 +1,44 @@
+def caesar_encrypt(text, shift):
+    encrypted = ""
+    for char in text:
+        if char.isalpha():
+            base = ord('A') if char.isupper() else ord('a')
+            encrypted += chr((ord(char) - base + shift) % 26 + base)
+        else:
+            encrypted += char
+    return encrypted
+
+def vigenere_encrypt(text, keyword):
+    encrypted = ""
+    keyword = keyword.lower()
+    keyword_length = len(keyword)
+    keyword_index = 0
+
+    for char in text:
+        if char.isalpha():
+            base = ord('A') if char.isupper() else ord('a')
+            shift = ord(keyword[keyword_index % keyword_length]) - ord('a')
+            encrypted += chr((ord(char) - base + shift) % 26 + base)
+            keyword_index += 1
+        else:
+            encrypted += char
+    return encrypted
+
+if __name__ == "__main__":
+    print("🔐 Personal Portfolio Encryption 🔐")
+
+    name = input("Enter your name: ")
+    profession = input("Enter your profession: ")
+    bio = input("Enter a short bio: ")
+
+    caesar_key = int(input("Enter Caesar Cipher key (integer): "))
+    vigenere_key = input("Enter Vigenère Cipher keyword (string): ")
+
+    encrypted_name = caesar_encrypt(name, caesar_key)
+    encrypted_profession = caesar_encrypt(profession, caesar_key)
+    encrypted_bio = vigenere_encrypt(bio, vigenere_key)
+
+    print("\n Encrypted Portfolio ")
+    print(f"Name: {encrypted_name}")
+    print(f"Profession: {encrypted_profession}")
+    print(f"Bio: {encrypted_bio}")
